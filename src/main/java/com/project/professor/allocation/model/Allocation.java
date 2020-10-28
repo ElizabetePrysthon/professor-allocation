@@ -2,14 +2,15 @@ package com.project.professor.allocation.model;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +31,27 @@ public class Allocation {
 	@Column(name = "end", nullable = false, columnDefinition = "TIME")
 	private Time endHour;
 
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	private Professor professor;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	private Course course;
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 
 	public Allocation() {
 		super();
@@ -66,4 +88,5 @@ public class Allocation {
 	public void setEndHour(Time endHour) {
 		this.endHour = endHour;
 	}
+
 }

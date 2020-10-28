@@ -1,28 +1,38 @@
 package com.project.professor.allocation.model;
 
-import java.time.DayOfWeek;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-	@Entity
-	@Table(name = "course")
-	public class Course {
+@Entity
+@Table(name = "course")
+public class Course {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Enumerated(EnumType.STRING)
+
 	@Column(name = "name", nullable = false)
 	private String name;
-	
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "professor", fetch = FetchType.LAZY)
+	private List<Allocation> allocations;
+
+	public List<Allocation> getAllocations() {
+		return allocations;
+	}
+
+	public void setAllocations(List<Allocation> allocations) {
+		this.allocations = allocations;
+	}
 
 	public Course(Long id, String name) {
 
